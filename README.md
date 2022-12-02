@@ -1,3 +1,20 @@
+# Reproducing the results from "Predicting hospital admission at emergency department triage using machine learning"
+#### Alex C Watts, Violet Hecmanczuk, Rachel Witt
+
+We attempt to reproduce the findings of this study in an effort to better understand the methods involved. We have a secondary objective of creating an implementation of the same models using the Tidymodels framework to compare performance. 
+
+#### Reproduction
+
+This should be relatively straightforward. Hong et al. have generously shared all of their code and deidentified data. We just need to work through it to determine what's going on at each step and recreate what they've done. 
+
+#### Tidymodels Implementation
+
+This will be the bulk of the work. As such, it might end up being more trouble than it's worth within the scope of this course. 
+
+#### Comparison
+
+This is the final and lowest priority step.
+
 # Predicting hospital admission at emergency department triage using machine learning
 #### Woo Suk Hong, Adrian Haimovich, R. Andrew Taylor
 
