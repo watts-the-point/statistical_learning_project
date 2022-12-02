@@ -4,9 +4,37 @@
 
 We attempt to reproduce the findings of this study in an effort to better understand the methods involved. We have a secondary objective of creating an implementation of the same models using the Tidymodels framework to compare performance.
 
+Run \`source("package_install.R") to install packages required for this analysis.
+
 ## Reproduction
 
 This should be relatively straightforward. Hong et al. have generously shared all of their code and deidentified data. We just need to work through it to determine what's going on at each step and recreate what they've done.
+
+### Use these scripts
+
+-   **Boosted Trees**
+
+    -   **build_boost.R**: trains and ouputs the average AUC on the training and validation sets for an XGBoost model, given a set of hyperparameters. Outputs the design matrix used by all subsequent scripts.
+
+    -   **build_final.R**: trains an XGBoost model using the optimized set of hyperparameters on all samples excluding the test set then outputs a test AUC with 95% CIs
+
+    -   **build_importance_ci.R**: trains the final XGBoost model 100 times to get the average information gain for each variable
+
+-   **Neural Net**
+
+    -   **build_keras.R**: trains and ouputs the average accuracy on the training and validation sets for a deep neural network (DNN) model, given the network architecture and other hyperparameters
+
+    -   **build_final_keras.R**: trains a DNN model using the optimized set of hyperparameters on all samples excluding the test set then outputs a test AUC with 95% CIs
+
+-   **Logistic Regression**
+
+    -   Technically uses neural net for this, but removes the hidden layer, thus LR.
+
+    -   **build_final_lr.R**: trains a LR model with *keras* using a network with no hidden layer
+
+-   **Evaluation**
+
+    -   **youdens.R**: uses Youden's Index to calculate the sensitivity/specificity/PPV/NPV of each model.
 
 ## Tidymodels Implementation
 

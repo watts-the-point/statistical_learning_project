@@ -1,0 +1,10 @@
+install.packages(c("readr",
+"plyr",
+"dplyr",
+"reshape2",
+"parallel",
+"caret",
+"xgboost",
+"doMC",
+"pROC",
+"keras"))
