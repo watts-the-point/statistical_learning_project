@@ -22,6 +22,8 @@ This should be relatively straightforward. Hong et al. have generously shared al
 
 -   **Neural Net**
 
+    -   This one requires a lot of memory
+
     -   **build_keras.R**: trains and ouputs the average accuracy on the training and validation sets for a deep neural network (DNN) model, given the network architecture and other hyperparameters
 
     -   **build_final_keras.R**: trains a DNN model using the optimized set of hyperparameters on all samples excluding the test set then outputs a test AUC with 95% CIs
