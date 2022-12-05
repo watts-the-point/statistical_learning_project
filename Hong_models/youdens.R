@@ -29,21 +29,21 @@ confusionMatrix(as.numeric(bst_pred_test_topvars>0.29), y_test, positive = '1')
 #will load one by one given all the objects have the same name ('keras_pred_test')
 
 #LR models
-# load('./Results/5v_lr_pred_test_onlytriage.RData')
-# confusionMatrix(as.numeric(keras_pred_test>0.43), y_test, positive = '1')
-# 
-# load('./Results/5v_lr_pred_test_onlyhx.RData')
-# confusionMatrix(as.numeric(keras_pred_test>0.28), y_test, positive = '1')
-# 
-# load('./Results/5v_lr_pred_test.RData')
-# confusionMatrix(as.numeric(keras_pred_test>0.34), y_test, positive = '1')
+load('./Results/5v_lr_pred_test_onlytriage.RData')
+confusionMatrix(as.numeric(keras_pred_test>0.43), y_test, positive = '1')
+
+load('./Results/5v_lr_pred_test_onlyhx.RData')
+confusionMatrix(as.numeric(keras_pred_test>0.28), y_test, positive = '1')
+
+load('./Results/5v_lr_pred_test.RData')
+confusionMatrix(as.numeric(keras_pred_test>0.34), y_test, positive = '1')
 
 #DNN models
-# load('./Results/5v_keras_pred_test_onlytriage.RData')
-# confusionMatrix(as.numeric(keras_pred_test>0.39), y_test, positive = '1')
-# 
-# load('./Results/5v_keras_pred_test_onlyhx.RData')
-# confusionMatrix(as.numeric(keras_pred_test>0.30), y_test, positive = '1')
-# 
-# load('./Results/5v_keras_pred_test.RData')
-# confusionMatrix(as.numeric(keras_pred_test>0.28), y_test, positive = '1')
+load('./Results/5v_keras_pred_test_onlytriage.RData')
+confusionMatrix(as.numeric(keras_pred_test>0.39), y_test, positive = '1')
+
+load('./Results/5v_keras_pred_test_onlyhx.RData')
+confusionMatrix(as.numeric(keras_pred_test>0.30), y_test, positive = '1')
+
+load('./Results/5v_keras_pred_test.RData')
+confusionMatrix(as.numeric(keras_pred_test>0.28), y_test, positive = '1')

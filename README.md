@@ -20,19 +20,17 @@ This should be relatively straightforward. Hong et al. have generously shared al
 
     -   **build_importance_ci.R**: trains the final XGBoost model 100 times to get the average information gain for each variable
 
--   **Neural Net**
+-   We're gonna focus on the XGBoost model
 
-    -   This one requires a lot of memory
+    -   Everyone take one of the 3 dataset sections and fit the XGBoost model to that data
 
-    -   **build_keras.R**: trains and ouputs the average accuracy on the training and validation sets for a deep neural network (DNN) model, given the network architecture and other hyperparameters
+        -   Alex: Full dataset
 
-    -   **build_final_keras.R**: trains a DNN model using the optimized set of hyperparameters on all samples excluding the test set then outputs a test AUC with 95% CIs
+        -   Violet: Triage only
 
--   **Logistic Regression**
+        -   Rachel: Medical Hx only
 
-    -   Technically uses neural net for this, but removes the hidden layer, thus LR.
-
-    -   **build_final_lr.R**: trains a LR model with *keras* using a network with no hidden layer
+    -   Reconvene to evaluate and work out how to present
 
 -   **Evaluation**
 
