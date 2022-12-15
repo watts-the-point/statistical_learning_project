@@ -1,0 +1,279 @@
+---
+title: "Predicting ED Admission"
+subtitle: "A Comparison of Methods fron Hong et al, Tidymodels, and Caret"
+author: "Violet Hecmanczuk, Alex Watts, and Rachel Witt"
+format: revealjs
+editor: visual
+---
+```{r, echo = F}
+library(targets)
+```
+
+## Outline
+
+-   Background
+
+-   What we used
+
+-   The Pipeline
+
+-   Comparing the results
+
+# Background
+
+## Hong et al.
+
+We reproduced "Predicting hospital admission at emergency department
+triage using machine learning."
+
+-   Aims
+
+    -   Develop a predictive model for hospital admissions at time of ED
+        triage
+
+    -   Determine what factors are important in determining admission
+
+## Their Methods
+
+Fit 9 Models (3 types with 3 datasets)
+
+::: nonincremental
+-   Types:
+    -   XGBoost
+    -   Neural Net
+    -   Logistic Regression
+-   Datasets
+    -   Full dataset
+    -   Triage and demographic data only
+    -   Medical history and demographic data only
+:::
+
+## Fitting Their Model
+
+Each script references wrapper functions and specially built scripts for
+this analysis.
+
+```{r, eval = F, echo = T}
+#Cross validation for XGBoost model (Github)
+library(readr)
+library(plyr)
+library(dplyr)
+library(reshape2)
+library(parallel)
+library(caret)
+library(xgboost)
+library(doMC)
+library(pROC)
+
+registerDoMC(5) #for parallelization. 
+# Note that results may differ slightly when using a different number of cores, 
+# given that nthreads in a hyperparameter for XGBoost.
+# nthreads = 5 were used for all XGBoost portion of the study.
+
+
+#1) load cleaned, deidentified dataframe
+
+load('./Results/5v_cleandf.RData')
+
+#2) Create a list of indeces for model fitting
+source('./Scripts/R/20b_splitdataindex.R')
+indeces_list <- splitdataindex(df)
+save(indeces_list, file = './Results/5v_indeces_list.RData')
+
+#3) Re-encode dataframe into design matrix x and response y
+source("./Scripts/R/21_makematrix.R")
+dataset <- makematrix(df, sparse = T)
+save(dataset, file = './Results/5v_sparseMatrix.RData')
+
+#4) Start CV
+source('./Scripts/R/25_fitboost.R')
+
+results <- matrix(NA, length(indeces_list), 2)
+colnames(results) <- c('train', 'dev')
+
+# Hyperparameters are changed manually. Here, we are optimizing depth.
+for (depth in c(15,20,25)) {
+        for (i in 1:length(indeces_list)) {
+                indeces <- indeces_list[[i]]
+                aucs <- fitboost(dataset, indeces, 
+                                 max_depth = depth, 
+                                 eta = 0.3,
+                                 nthread = 5,
+                                 nrounds = 30,
+                                 colsample_bylevel = 0.05)
+                results[i,] <- aucs
+        }
+        print(results)
+        #get mean train and dev AUCs
+        print(paste('Average train and dev AUCs for depth', depth))
+        print(colMeans(results))
+```
+
+# But can we do better?
+
+## (Not) Reinventing the Wheel
+
+One of R's biggest advangages is its robust developer community.
+
+A variety of useful packages are ready-built for the exact needs met in
+the code included in this analysis.
+
+## Packages We Used
+
+-   Tidymodels
+
+    -   A collection of wrapper packages for data science and
+        statistical learning
+
+-   Caret
+
+    -   A package of wrapper functions for machine learning and data science
+
+-   Targets
+
+    -   For pipeline management and workflow organization
+    
+# The Pipeline    
+
+## Creating a Project with Targets
+Targets provides a convenient way of organizing workflow in a project while keeping runtimes and memory management in check.
+
+```{r, echo = T, eval = F}
+targets::use_targets()
+```
+
+This creates a `_targets.R` document, which is where the actual workflow lives. You're then free to create functions in a separate script or define objects within the workflow itself.
+
+If you need to change something, you can do so while only rerunning that part of the workflow and any downstream results of that change.
+
+## Our `_targets.R` File
+
+```{r, echo = T, eval = F}
+# Created by use_targets().
+# Follow the comments below to fill in this target script.
+# Then follow the manual to check and run the pipeline:
+#   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline # nolint
+
+# Load packages required to define the pipeline:
+library(targets)
+# library(tarchetypes) # Load other packages as needed. # nolint
+
+# Set target options:
+tar_option_set(
+  packages = c("tibble", "tidyverse", "caret", "tidymodels"), # packages that your targets need to run
+  format = "rds", # default storage format
+  # Set other options as needed.
+  memory = "transient",
+  garbage_collection = TRUE
+)
+
+# tar_make_clustermq() configuration (okay to leave alone):
+options(clustermq.scheduler = "multicore")
+
+# tar_make_future() configuration (okay to leave alone):
+# Install packages {{future}}, {{future.callr}}, and {{future.batchtools}} to allow use_targets() to configure tar_make_future() options.
+
+# Run the R scripts in the R/ folder with your custom functions:
+tar_source()
+# source("other_functions.R") # Source other scripts as needed. # nolint
+
+# Replace the target list below with your own:
+list(
+  tar_target(indices,
+             load("Results/5v_indeces_list.RData"), 
+             format = "file"),
+  tar_target(test_indices,
+             indices[[1]]$i_test),
+  tar_target(df,
+             load("Results/5v_cleandf.RData"),
+             format = "file"),
+  tar_target(predictors,
+             model.matrix(disposition ~ ., df)),
+  tar_target(outcome,
+             df$disposition),
+  tar_target(test_x,
+             predictors[test_indices,]),
+  tar_target(test_y,
+             outcome[test_indices,]),
+  tar_target(train_x,
+             predictors[c(indices[[1]]$i_dev, indices[[1]]$i_train),]),
+  tar_target(train_y,
+             outcome[c(indices[[1]]$i_dev, indices[[1]]$i_train),]),
+#create a list of targets for the caret model and tidymodels model separately
+#
+# Caret
+  tar_target(caret_folds,
+             list(indices[[1]]$i_dev,
+                  indices[[2]]$i_dev,
+                  indices[[3]]$i_dev,
+                  indices[[4]]$i_dev,
+                  indices[[5]]$i_dev)),
+  tar_target(caret_control,
+             trainControl(method = "cv",
+                          index = caret_folds,
+                          classProbs = TRUE,
+                          savePredictions = TRUE,
+                          summaryFunction = prSummary,
+                          verboseIter = TRUE)),
+  tar_target(xgb_grid,
+             expand.grid(
+               maxdepth = c(15, 20, 25),
+               eta = 0.3,
+               nthread = 5,
+               nrounds = 30,
+               colsample_bylevel = 0.05)),
+  tar_target(caret_fit,
+             train(train_x,
+                   train_y, 
+                   method = "xgbTree",
+                   control = caret_control,
+                   metric = "AUC",
+                   tunegrid = xgb_grid
+                   )),
+  #
+  #Tidymodels
+  tar_target(index_list,
+             lapply(indices, 
+                    function(x){
+                      list(analysis = x$i_train, 
+                           assessment = x$i_dev)
+                      })),
+  tar_target(splits,
+             lapply(index_list, make_splits, data = df)),
+  tar_target(rset_folds,
+             manual_rset(splits, index_list)),
+  tar_target(tidy_control,
+             control_grid(verbose = TRUE,
+                          save_pred = TRUE)),
+  tar_target(model,
+             boost_tree() %>% 
+               set_engine("xgboost") %>% 
+               set_mode("classification") %>% 
+               set_args(nthread = 5, 
+                        tree_depth = tune(),
+                        eta = 0.3, 
+                        trees = 30,
+                        colsample_bylevel = 0.05)),
+  tar_target(workflow,
+             workflow() %>% 
+               add_variables(outcomes = outcome, predictors = predictors) %>% 
+               add_model(model)),
+  tar_target(fit_res,
+             tune_grid(workflow, 
+                       resamples = rset_folds, 
+                       grid = c(15, 20, 25),
+                       control = tidy_control
+                       metrics = metric_set("roc_auc"))
+)
+
+```
+
+## Visualizing the Workflow
+
+```{r}
+tar_visnetwork()
+```
+```{r}
+tar_make()
+```
+
