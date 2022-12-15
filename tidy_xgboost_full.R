@@ -16,13 +16,33 @@ split <- initial_split(df, prop = .9)
 training <- training(split)
 testing <- testing(split)
 
+
+
 full_xgb_rec <- 
   recipe(disposition ~ ., data = training) %>% 
   step_dummy(all_nominal_predictors())
 
 full_xgb_rec %>% prep()
 
-cv_set <- vfold_cv(training, v = 5)
+indexes <- list(
+  list(analysis = indices[[1]]$i_train %>% as.integer, 
+       assessment = indices[[1]]$i_dev %>% as.integer),
+  list(analysis = indices[[2]]$i_train %>% as.integer, 
+       assessment = indices[[2]]$i_dev %>% as.integer),
+  list(analysis = indices[[3]]$i_train %>% as.integer, 
+       assessment = indices[[3]]$i_dev %>% as.integer),
+  list(analysis = indices[[4]]$i_train %>% as.integer, 
+       assessment = indices[[4]]$i_dev %>% as.integer),
+  list(analysis = indices[[5]]$i_train %>% as.integer, 
+       assessment = indices[[5]]$i_dev %>% as.integer)
+) 
+
+splitsss <- lapply(indexes, make_splits, data = df)
+
+cv_set <- vfold_cv(training, v = 9) %>% 
+  slice(1:5)
+cv_set <- manual_rset(splits = cv_set$splits, 
+                   ids = cv_set$id)
 
 xgb_mod <- boost_tree() %>% 
   set_engine("xgboost") %>% 
@@ -38,4 +58,10 @@ xgb_wf <- workflow() %>%
   add_model(xgb_mod) %>% 
   add_recipe(full_xgb_rec)
 
-xgb_wf %>% fit(data = training)
+control <- control_resamples(verbose = T, save_pred = T)
+
+xgb_fit <- xgb_wf %>% 
+  fit_resamples(data = training,
+                resamples = cv_set,
+                control = control,
+                metrics = metric_set(accuracy, roc_auc))
