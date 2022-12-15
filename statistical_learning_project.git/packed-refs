@@ -1,0 +1,6 @@
+# pack-refs with: peeled fully-peeled sorted 
+d2ee20cf8d7f28eba7ae5f65c48e20396105b885 refs/heads/Reproduction
+c32b32b4df01f411638c97ea79fa25acb2d4ed16 refs/heads/Tidymodels
+45b5a296d760ad70836199da21fd0ab511368063 refs/heads/master
+c32b32b4df01f411638c97ea79fa25acb2d4ed16 refs/pull/1/head
+5cf50bccf65b2fa83fab14dc15b47c2fe9b1ea5f refs/tags/v1.0
