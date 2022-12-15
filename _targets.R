@@ -9,7 +9,12 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble", "tidyverse", "caret", "tidymodels", "Matrix"), # packages that your targets need to run
+  packages = c("tibble", 
+               "tidyverse", 
+               "caret", 
+               "tidymodels", 
+               "Matrix",
+                "doMC"), # packages that your targets need to run
   format = "rds", # default storage format
   # Set other options as needed.
   memory = "transient",
@@ -84,7 +89,7 @@ list(
                            assessment = as.integer(x$i_dev))
                       })),
   tar_target(splits,
-             lapply(index_list, make_splits, data = bind_cols(train_x, train_y)),
+             lapply(index_list, make_splits, data = bind_cols(train_x, train_y))),
   tar_target(rset_folds,
              manual_rset(splits, index_list)),
   tar_target(tidy_control,

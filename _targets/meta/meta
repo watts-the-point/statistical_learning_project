@@ -1,6 +1,7 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 caret_control|stem|e49838b4277f9e92|37f1ffc0cb8fe84c|834f4d243db4e2fa|1709899579||t19341.3622724223s|bb557115ac951b40|1054729|rds|local|vector|||0.002||
 caret_folds|stem|92ba01ee7808ff1b|8b93f0b0127d986e|ae6904f44f074147|1443767831||t19341.3616402008s|528a7f6562fceba3|1051740|rds|local|vector|||0.002||
+cores|stem||b3c4926c1c456240|f28568424d4386e9|-2143893326||t19341.7486775803s||0|rds|local|vector|||4.376|there is no package called DoMC|31mcould not find packages DoMC in library paths 39m
 data|stem|9e29c35ea6471847|aad3fcdfb51d67a0|9629660cd90cb1ad|1588979285||t19341.7115336283s|7c445f2779cc8aa7|589844630|rds|local|vector|||63.243||
 df|stem|6015663096a73490|8bb3f4eee3e1487e|4e65ca06228c7890|-1046211958||t19341.3616139991s|1e2e9e881e7e033c|103446670|rds|local|vector|||20.863||
 df_prep_1|stem|0176cf63d03af53d|b16103a0d158a4a4|817c34e9352a4108|-1191803182||t19341.4650585559s|8a26e2e06a5e9450|10260665|rds|local|vector|||21.74|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|
@@ -17,7 +18,7 @@ df_prep_8|stem|447ed0690b35c305|0c48cf0ce793a0a4|817c34e9352a4108|-110262297||t1
 df_prep_9|stem|a3e31a2854f44112|e7cf02b708e0ad65|817c34e9352a4108|868416657||t19341.4710500763s|6f7d5f52fb0f59dc|8399692|rds|local|vector|||15.164|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|
 dummies|stem|64777abae69ff7ff|5c87dd2a1b4cc903|ddb2f33cd0cbd8a3|-1974841381||t19341.7031046127s|9807100bbc838681|207003389|rds|local|vector|||7.046||
 index_list|stem|092658b671240b62|3fd27e2431c29874|99f3e1342edbe437|1719072402||t19341.3646980399s|b82d41484d5888cc|5910806|rds|local|vector|||0.278||
-indices|stem|2f87489f328126ec|4aa6c09f4590f186|0482a3cd076e2352|-373317843||t19341.3603943946s|c400294e31fceb8f|7346254|rds|local|vector|||7.31||
+indices|stem|2f87489f328126ec|4aa6c09f4590f186|0482a3cd076e2352|1255932355||t19341.7486715592s|c400294e31fceb8f|7346254|rds|local|vector|||4.715||
 makematrix|function|15ee02e508576893|||||||||||||||
 model|stem|6242ef446b1b8e80|90d7469f8462b0e0|c90787c98599ab17|1816327236||t19341.3538725389s|537075fe4de00fda|500|rds|local|vector|||0.218||
 outcome|stem|9e7063ad9b259494|63f8899cf5a7aa83|522fb912d3644dc4|2021572777||t19341.3619112406s|f4247c88f44fe93c|111122|rds|local|vector|||0.002||
@@ -38,4 +39,19 @@ train_x|stem|a924a3a3c578d385|6f11db6803665aee|6d3a3bd830615078|520053367||t1934
 train_y|stem|ada6251ad70c8041|f35bed99d5ffb0fb|6d3a3bd830615078|273532180||t19341.7116940141s|7087952c84411061|124433|rds|local|vector|||0.012||
 training|stem||b2c7b96ac2ba7684|f666627052624d99|-986423961||t19341.4338549042s||0|rds|local|vector|||29.235|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|vector memory exhausted limit reached
 workflow|stem|fb6c61f7069b3aa9|541e230326a89871|90dd880030f9e6d3|-1791642024||t19341.4330787037s|c8da580d4ab439ea|802|rds|local|vector|||0.087||
-xgb_grid|stem|3d65a1803a0ed260|3e87814de0addb6e|d494839309a7d3ee|2100995836||t19341.3531091946s|09ba59ab403de298|314|rds|local|vector|||0.003||
+xgb_grid|stem|3d65a1803a0ed260|3e87814de0addb6e|d494839309a7d3ee|2121055426||t19341.7486743691s|09ba59ab403de298|314|rds|local|vector|||0.001||
+read_indices|function|9bb0fdbb83bd515b
+makematrix|function|15ee02e508576893
+read_data|function|70594c60c3166e5c
+cores|stem|e9b735c11f69bc3a|b3c4926c1c456240|f28568424d4386e9|-2143893326||t19341.7494172152s|9ea571d1cd313787|411|rds|local|vector|||4.067|package doMC was built under R version 4.0.5. package foreach was built under R version 4.0.5. package iterators was built under R version 4.0.5|
+tidy_control|stem|f69441e3e79f20ab|20e8937fa945365d|19fcfac402339f81|714032551||t19341.7494198918s|ab284657d4bd29c6|211|rds|local|vector|||0.002||
+df|stem|6015663096a73490|8bb3f4eee3e1487e|4e65ca06228c7890|-1024490029||t19341.7502779568s|1e2e9e881e7e033c|103446670|rds|local|vector|||16.365||
+model|stem|6242ef446b1b8e80|90d7469f8462b0e0|c90787c98599ab17|-1648189087||t19341.7502888392s|537075fe4de00fda|500|rds|local|vector|||0.148||
+caret_folds|stem|92ba01ee7808ff1b|8b93f0b0127d986e|ae6904f44f074147|-479174556||t19341.7502978665s|528a7f6562fceba3|1051740|rds|local|vector|||0.001||
+index_list|stem|092658b671240b62|3fd27e2431c29874|99f3e1342edbe437|-1981046882||t19341.7503262195s|b82d41484d5888cc|5910806|rds|local|vector|||0.016||
+test_indices|stem|927559df0a21b02a|337a7f31a213d680|c094d9bc99ce40f2|1017048711||t19341.7503313869s|9f6cb3d8642e6305|210392|rds|local|vector|||0.001||
+data|stem|9e29c35ea6471847|aad3fcdfb51d67a0|9629660cd90cb1ad|-545668641||t19341.7535195049s|7c445f2779cc8aa7|589844630|rds|local|vector|||71.252||
+caret_control|stem|e49838b4277f9e92|37f1ffc0cb8fe84c|834f4d243db4e2fa|-1218851260||t19341.7535401555s|bb557115ac951b40|1054729|rds|local|vector|||0.006||
+train_y|stem|ada6251ad70c8041|f35bed99d5ffb0fb|6d3a3bd830615078|1757024418||t19341.7536927887s|7087952c84411061|124433|rds|local|vector|||0.013||
+train_x|stem|a924a3a3c578d385|6f11db6803665aee|6d3a3bd830615078|1071431400||t19341.7558550182s|f4ed2e142f0deea3|537946499|rds|local|vector|||13.744||
+workflow|stem|0d4363dea52a7ca7|28eb4c5b1201dc66|4750d50140632999|-1727912790||t19341.7577653818s|7836f5353a9a395b|538050819|rds|local|vector|||0.04||
