@@ -5,6 +5,7 @@ author: "Violet Hecmanczuk, Alex Watts, and Rachel Witt"
 format: revealjs
 editor: visual
 ---
+
 ```{r, echo = F}
 library(targets)
 ```
@@ -23,13 +24,11 @@ library(targets)
 
 ## Hong et al.
 
-We reproduced "Predicting hospital admission at emergency department
-triage using machine learning."
+We reproduced "Predicting hospital admission at emergency department triage using machine learning."
 
 -   Aims
 
-    -   Develop a predictive model for hospital admissions at time of ED
-        triage
+    -   Develop a predictive model for hospital admissions at time of ED triage
 
     -   Determine what factors are important in determining admission
 
@@ -50,8 +49,7 @@ Fit 9 Models (3 types with 3 datasets)
 
 ## Fitting Their Model
 
-Each script references wrapper functions and specially built scripts for
-this analysis.
+Each script references wrapper functions and specially built scripts for this analysis.
 
 ```{r, eval = F, echo = T}
 #Cross validation for XGBoost model (Github)
@@ -109,21 +107,17 @@ for (depth in c(15,20,25)) {
         print(colMeans(results))
 ```
 
-# But can we do better?
-
-## (Not) Reinventing the Wheel
+# Why Reinvent the Wheel?
 
 One of R's biggest advangages is its robust developer community.
 
-A variety of useful packages are ready-built for the exact needs met in
-the code included in this analysis.
+A variety of useful packages are ready-built for the exact needs met in the code included in this analysis.
 
-## Packages We Used
+## Packages We Tried
 
 -   Tidymodels
 
-    -   A collection of wrapper packages for data science and
-        statistical learning
+    -   A collection of wrapper packages for data science and statistical learning
 
 -   Caret
 
@@ -132,10 +126,11 @@ the code included in this analysis.
 -   Targets
 
     -   For pipeline management and workflow organization
-    
-# The Pipeline    
+
+# The Pipeline 
 
 ## Creating a Project with Targets
+
 Targets provides a convenient way of organizing workflow in a project while keeping runtimes and memory management in check.
 
 ```{r, echo = T, eval = F}
@@ -273,7 +268,13 @@ list(
 ```{r}
 tar_visnetwork()
 ```
+
 ```{r}
 tar_make()
 ```
 
+# ...But Machines Simply Can't Keep Up
+
+Even running on 32 GB RAM, models implemented using these packages crashed. Hong's code, though more complicated, is able to at least run.
+
+This research situation highlights the value of learning base R; it sometimes is the only way to make a program work on your machine.
