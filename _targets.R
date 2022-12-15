@@ -9,7 +9,12 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble", "tidyverse", "caret", "tidymodels", "Matrix"), # packages that your targets need to run
+  packages = c("tibble", 
+               "tidyverse", 
+               "caret", 
+               "tidymodels", 
+               "Matrix",
+               "doParallel"), # packages that your targets need to run
   format = "rds", # default storage format
   # Set other options as needed.
   memory = "transient",
@@ -31,7 +36,7 @@ tar_source("R/functions.R")
 # Replace the target list below with your own:
 list(
   tar_target(cores,
-             registerDoMC(5)),
+             registerDoParallel(5)),
   tar_target(indices,
              read_indices()),
   tar_target(test_indices,
@@ -47,15 +52,22 @@ list(
 #create a list of targets for the caret model and tidymodels model separately
 #
 # Caret
+  tar_target(caret_train,
+             list(as.integer(indices[[1]]$i_train),
+                  as.integer(indices[[2]]$i_train),
+                  as.integer(indices[[3]]$i_train),
+                  as.integer(indices[[4]]$i_train),
+                  as.integer(indices[[5]]$i_train))),
   tar_target(caret_folds,
-             list(indices[[1]]$i_dev,
-                  indices[[2]]$i_dev,
-                  indices[[3]]$i_dev,
-                  indices[[4]]$i_dev,
-                  indices[[5]]$i_dev)),
+             list(as.integer(indices[[1]]$i_dev),
+                  as.integer(indices[[2]]$i_dev),
+                  as.integer(indices[[3]]$i_dev),
+                  as.integer(indices[[4]]$i_dev),
+                  as.integer(indices[[5]]$i_dev))),
   tar_target(caret_control,
              trainControl(method = "cv",
-                          index = caret_folds,
+                          index = caret_train,
+                          indexOut = caret_folds,
                           classProbs = TRUE,
                           savePredictions = TRUE,
                           summaryFunction = prSummary,
@@ -68,45 +80,49 @@ list(
                nrounds = 30,
                colsample_bylevel = 0.05)),
   tar_target(caret_fit,
-             train(train_x,
-                   train_y, 
+             train(data[[2]],
+                   data[[1]], 
                    method = "xgbTree",
                    control = caret_control,
                    metric = "AUC",
                    tunegrid = xgb_grid
-                   )),
+                   ))
   #
   #Tidymodels
-  tar_target(index_list,
-             lapply(indices, 
-                    function(x){
-                      list(analysis = as.integer(x$i_train), 
-                           assessment = as.integer(x$i_dev))
-                      })),
-  tar_target(splits,
-             lapply(index_list, make_splits, data = bind_cols(train_x, train_y)),
-  tar_target(rset_folds,
-             manual_rset(splits, index_list)),
-  tar_target(tidy_control,
-             control_grid(verbose = TRUE,
-                          save_pred = TRUE)),
-  tar_target(model,
-             boost_tree() %>% 
-               set_engine("xgboost") %>% 
-               set_mode("classification") %>% 
-               set_args(nthread = 5, 
-                        tree_depth = tune(),
-                        eta = 0.3, 
-                        trees = 30,
-                        colsample_bylevel = 0.05)),
-  tar_target(workflow,
-             workflow() %>% 
-               add_variables(outcomes = train_y, predictors = train_x) %>% 
-               add_model(model)),
-  tar_target(fit_res,
-             tune_grid(workflow, 
-                       resamples = rset_folds, 
-                       grid = c(15, 20, 25),
-                       control = tidy_control,
-                       metrics = metric_set("roc_auc")))
+  # tar_target(rset_folds,
+  #            caret2rsample(caret_control, cbind(data[[1]], data[[2]]))),
+  # # tar_target(index_list,
+  # #            lapply(indices, 
+  # #                   function(x){
+  # #                     list(analysis = as.integer(x$i_train), 
+  # #                          assessment = as.integer(x$i_dev))
+  # #                     })),
+  # # tar_target(splits,
+  # #            lapply(index_list, 
+  # #                   make_splits, 
+  # #                   data = cbind(train_x, train_y))),
+  # # tar_target(rset_folds,
+  # #            manual_rset(splits, index_list)),
+  # tar_target(tidy_control,
+  #            control_grid(verbose = TRUE,
+  #                         save_pred = TRUE)),
+  # tar_target(model,
+  #            boost_tree() %>% 
+  #              set_engine("xgboost") %>% 
+  #              set_mode("classification") %>% 
+  #              set_args(nthread = 5, 
+  #                       tree_depth = tune(),
+  #                       eta = 0.3, 
+  #                       trees = 30,
+  #                       colsample_bylevel = 0.05)),
+  # tar_target(workflow,
+  #            workflow() %>% 
+  #              add_variables(outcomes = train_y, predictors = train_x) %>% 
+  #              add_model(model)),
+  # tar_target(fit_res,
+  #            tune_grid(workflow, 
+  #                      resamples = rset_folds, 
+  #                      grid = c(15, 20, 25),
+  #                      control = tidy_control,
+  #                      metrics = metric_set("roc_auc")))
 )

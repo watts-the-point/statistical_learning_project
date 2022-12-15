@@ -1,8 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-caret_control|stem|e49838b4277f9e92|37f1ffc0cb8fe84c|834f4d243db4e2fa|1709899579||t19341.3622724223s|bb557115ac951b40|1054729|rds|local|vector|||0.002||
-caret_folds|stem|92ba01ee7808ff1b|8b93f0b0127d986e|ae6904f44f074147|1443767831||t19341.3616402008s|528a7f6562fceba3|1051740|rds|local|vector|||0.002||
-data|stem|9e29c35ea6471847|aad3fcdfb51d67a0|9629660cd90cb1ad|1588979285||t19341.7115336283s|7c445f2779cc8aa7|589844630|rds|local|vector|||63.243||
-df|stem|6015663096a73490|8bb3f4eee3e1487e|4e65ca06228c7890|-1046211958||t19341.3616139991s|1e2e9e881e7e033c|103446670|rds|local|vector|||20.863||
+caret_folds|stem|3db64e6068ea1ebc|2834db70e447a892|0cfeec224ba06f1b|-479174556||t19341.8779668045s|cd3fbbee25187313|851889|rds|local|vector|||0||
+caret_train|stem|5c1b8be03054f8cc|8ea1bcf40cbe407e|0cfeec224ba06f1b|303377643||t19341.881845436s|8e6cee3ff8a53a3f|5045557|rds|local|vector|||0.04||
+cores|stem|68c1c1d25ae8b40a|ef75a94cd075a4b8|4d2be0917e005c45|-2143893326||t19341.8238230067s|90721f4785deae35|436|rds|local|vector|||3.07||
+data|stem|c2b1ab17cc8044bf|aad3fcdfb51d67a0|f6c45a94fda23d4f|-545668641||t19341.8275332407s|ebe3a27b431117bc|589703686|rds|local|vector|||12.36||
+df|stem|a9cb30682834e2c3|8bb3f4eee3e1487e|4e65ca06228c7890|-1024490029||t19341.824397134s|1e2e9e881e7e033c|103446670|rds|local|vector|||11.55||
 df_prep_1|stem|0176cf63d03af53d|b16103a0d158a4a4|817c34e9352a4108|-1191803182||t19341.4650585559s|8a26e2e06a5e9450|10260665|rds|local|vector|||21.74|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|
 df_prep_10|stem|9acdf79c6cbcbce1|ea23685695369c20|817c34e9352a4108|-2108416541||t19341.4717633026s|8ac73b5afde31960|8390728|rds|local|vector|||15.559|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|
 df_prep_11|stem|ac599e5cad9e6964|8970c08f36071fc8|817c34e9352a4108|-2068766051||t19341.4724729133s|9e85bff931dd627e|9844235|rds|local|vector|||15.213|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|
@@ -16,26 +17,30 @@ df_prep_7|stem|ee9f6cedb0643b41|b81f051e6abe8490|817c34e9352a4108|178170441||t19
 df_prep_8|stem|447ed0690b35c305|0c48cf0ce793a0a4|817c34e9352a4108|-110262297||t19341.4703400674s|f7912fce7889286d|9669167|rds|local|vector|||15.032|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|
 df_prep_9|stem|a3e31a2854f44112|e7cf02b708e0ad65|817c34e9352a4108|868416657||t19341.4710500763s|6f7d5f52fb0f59dc|8399692|rds|local|vector|||15.164|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|
 dummies|stem|64777abae69ff7ff|5c87dd2a1b4cc903|ddb2f33cd0cbd8a3|-1974841381||t19341.7031046127s|9807100bbc838681|207003389|rds|local|vector|||7.046||
-index_list|stem|092658b671240b62|3fd27e2431c29874|99f3e1342edbe437|1719072402||t19341.3646980399s|b82d41484d5888cc|5910806|rds|local|vector|||0.278||
-indices|stem|2f87489f328126ec|4aa6c09f4590f186|0482a3cd076e2352|-373317843||t19341.3603943946s|c400294e31fceb8f|7346254|rds|local|vector|||7.31||
-makematrix|function|15ee02e508576893|||||||||||||||
-model|stem|6242ef446b1b8e80|90d7469f8462b0e0|c90787c98599ab17|1816327236||t19341.3538725389s|537075fe4de00fda|500|rds|local|vector|||0.218||
+index_list|stem|7434de0fa3932a65|3fd27e2431c29874|16b629d37d64dddf|-1981046882||t19341.8244275406s|b82d41484d5888cc|5910806|rds|local|vector|||0.02||
+indices|stem|f3ac2682799206be|4aa6c09f4590f186|0482a3cd076e2352|1255932355||t19341.8231632077s|11a2b47b2f586a5e|7346255|rds|local|vector|||3.83||
+model|stem|e312f900fb077806|90d7469f8462b0e0|c90787c98599ab17|-1648189087||t19341.8244056322s|537075fe4de00fda|500|rds|local|vector|||0.09||
 outcome|stem|9e7063ad9b259494|63f8899cf5a7aa83|522fb912d3644dc4|2021572777||t19341.3619112406s|f4247c88f44fe93c|111122|rds|local|vector|||0.002||
 outcomes|stem|9e7063ad9b259494|63f8899cf5a7aa83|522fb912d3644dc4|1589802143||t19341.7041635757s|f4247c88f44fe93c|111122|rds|local|vector|||0.001||
 pred_matrix|stem||1b2b47f38945f1c7|5bef5db9a92252c9|-906415639||t19341.7048101786s||0|rds|local|vector|||3.433||vector memory exhausted limit reached
 predictors|stem|73cd80a4dbf8a511|0d21a27595d4dd14|88b61ebe5d7eda51|1397843854||t19341.7039920716s|be0331a38ee51741|103309043|rds|local|vector|||0.015||
 prep_list|function|6879c769be832657|||||||||||||||
 process_rec|stem|d554e7949918b936|eef9e0f232ed02bf|95469e48d8765b25|-1071649748||t19341.4330714826s|e7ae86ce94fcc262|310332657|rds|local|vector|||0.142||
-read_data|function|70594c60c3166e5c|||||||||||||||
-read_indices|function|9bb0fdbb83bd515b|||||||||||||||
-rset_folds|stem||d745e3444d27705b|ff3009c0213f6c44|1810040813||t19341.4738348603s||0|rds|local|vector|||0.011||could not load dependencies of target rset_folds. vector memory exhausted limit reached
-splits|stem|364d889e8196661d|be80ce6df7c2089b|585042795309e7b5|832082529||t19341.3703586446s|79af6ee35fdce343|523150004|rds|local|vector|||0.025||
-test_indices|stem|927559df0a21b02a|337a7f31a213d680|c094d9bc99ce40f2|1342199424||t19341.3616948629s|9f6cb3d8642e6305|210392|rds|local|vector|||0.002||
+rset_folds|stem||834e24d0758dfb33|6ee9beac58e2cce3|-289039680||t19341.4738348603s||0|rds|local|vector|||3.42||Split and ID vectors have different lengths.
+splits|stem|364d889e8196661d|bdab3df8fde7c7c9|9123feb050017ed7|2077075799||t19341.3703586446s||523150004|rds|local|vector|||2.11||data must be a data frame.
+test_indices|stem|4a6aafe275d433f1|337a7f31a213d680|071b122f317bfbaa|1017048711||t19341.8244327852s|9f6cb3d8642e6305|210392|rds|local|vector|||0||
 test_x|stem||b103ef5a65393243|0eabe9260a6076aa|-54807615||t19341.3719239789s||0|rds|local|vector|||0.006||subscript out of bounds
 test_y|stem|f045a2553321f05b|211ba319ed8592a2|541a67ff558b8f88|-324955251||t19341.3719132145s|a56dab17a4c32a5f|11904|rds|local|vector|||0.003||
-tidy_control|stem|f69441e3e79f20ab|20e8937fa945365d|19fcfac402339f81|1894414514||t19341.3538674742s|ab284657d4bd29c6|211|rds|local|vector|||5.567||
-train_x|stem|a924a3a3c578d385|6f11db6803665aee|6d3a3bd830615078|520053367||t19341.7139584999s|f4ed2e142f0deea3|537946499|rds|local|vector|||13.55||
-train_y|stem|ada6251ad70c8041|f35bed99d5ffb0fb|6d3a3bd830615078|273532180||t19341.7116940141s|7087952c84411061|124433|rds|local|vector|||0.012||
+tidy_control|stem|5bc42b7cf896ce58|20e8937fa945365d|19fcfac402339f81|714032551||t19341.8238262154s|ab284657d4bd29c6|211|rds|local|vector|||0||
+train_x|stem|45957f391450d2b3|6f11db6803665aee|37da21406bbf6113|1071431400||t19341.829056577s|21053348becb12b1|537813828|rds|local|vector|||9.41||
+train_y|stem|42949163d7e96fac|f35bed99d5ffb0fb|37da21406bbf6113|1757024418||t19341.8276361495s|225a6877d5ecab36|124434|rds|local|vector|||0.02||
 training|stem||b2c7b96ac2ba7684|f666627052624d99|-986423961||t19341.4338549042s||0|rds|local|vector|||29.235|There are new levels in a factor NA. There are new levels in a factor NA. There are new levels in a factor NA|vector memory exhausted limit reached
-workflow|stem|fb6c61f7069b3aa9|541e230326a89871|90dd880030f9e6d3|-1791642024||t19341.4330787037s|c8da580d4ab439ea|802|rds|local|vector|||0.087||
-xgb_grid|stem|3d65a1803a0ed260|3e87814de0addb6e|d494839309a7d3ee|2100995836||t19341.3531091946s|09ba59ab403de298|314|rds|local|vector|||0.003||
+workflow|stem|262af01428a07b81|28eb4c5b1201dc66|98dba5f8e2610212|-1727912790||t19341.830359337s|f7fa877047ae8312|537934933|rds|local|vector|||0.05||
+xgb_grid|stem|31d7a18ef5f03f91|3e87814de0addb6e|d494839309a7d3ee|2121055426||t19341.8231664675s|09ba59ab403de298|314|rds|local|vector|||0||
+read_indices|function|9bb0fdbb83bd515b|||||||||||||||
+makematrix|function|15ee02e508576893|||||||||||||||
+read_data|function|70594c60c3166e5c|||||||||||||||
+caret_control|stem|fbb749151cfb3f9a|33c582b09d1d2100|0ad46afa45803ec4|-1218851260||t19341.8863911596s|b12f58049df8d830|5902677|rds|local|vector|||0||
+read_indices|function|9bb0fdbb83bd515b
+makematrix|function|15ee02e508576893
+read_data|function|70594c60c3166e5c
