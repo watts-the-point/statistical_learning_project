@@ -9,11 +9,13 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble", "tidyverse", "caret", "tidymodels"), # packages that your targets need to run
+  packages = c("tibble", "tidyverse", "caret", "tidymodels", "Matrix"), # packages that your targets need to run
   format = "rds", # default storage format
   # Set other options as needed.
   memory = "transient",
-  garbage_collection = TRUE
+  garbage_collection = TRUE,
+  #Seed used in 20b_splitdataindex.R
+  seed = 3883
 )
 
 # tar_make_clustermq() configuration (okay to leave alone):
@@ -28,29 +30,20 @@ tar_source("R/functions.R")
 
 # Replace the target list below with your own:
 list(
+  tar_target(cores,
+             registerDoMC(5)),
   tar_target(indices,
              read_indices()),
   tar_target(test_indices,
              indices[[1]]$i_test),
   tar_target(df,
              read_data()),
-  tar_target(processed,
-               recipe(disposition ~ ., data = training) %>% 
-               step_dummy(all_nominal_predictors()) %>% 
-               prep() %>% 
-               bake(df)),
-  tar_target(predictors,
-             processed %>% select(-disposition)),
-  tar_target(outcome,
-             df$disposition),
-  tar_target(test_x,
-             predictors[test_indices,]),
-  tar_target(test_y,
-             outcome[test_indices]),
+  tar_target(data,
+             makematrix(df)),
   tar_target(train_x,
-             predictors[c(indices[[1]]$i_dev, indices[[1]]$i_train),]),
+             data[[2]][c(indices[[1]]$i_train, indices[[1]]$i_dev),]),
   tar_target(train_y,
-             outcome[c(indices[[1]]$i_dev, indices[[1]]$i_train)]),
+             data[[1]][c(indices[[1]]$i_train, indices[[1]]$i_dev)]),
 #create a list of targets for the caret model and tidymodels model separately
 #
 # Caret
@@ -91,7 +84,7 @@ list(
                            assessment = as.integer(x$i_dev))
                       })),
   tar_target(splits,
-             lapply(index_list, make_splits, data = df)),
+             lapply(index_list, make_splits, data = bind_cols(train_x, train_y)),
   tar_target(rset_folds,
              manual_rset(splits, index_list)),
   tar_target(tidy_control,
@@ -108,7 +101,7 @@ list(
                         colsample_bylevel = 0.05)),
   tar_target(workflow,
              workflow() %>% 
-               add_variables(outcomes = outcome, predictors = predictors) %>% 
+               add_variables(outcomes = train_y, predictors = train_x) %>% 
                add_model(model)),
   tar_target(fit_res,
              tune_grid(workflow, 
